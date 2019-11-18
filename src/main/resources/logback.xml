@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="DEV_HOME" value="./logs" />
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE-APP" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/application.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${DEV_HOME}/archived/app/app.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>10MB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">>
+            <pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.exercises2" level="DEBUG" additivity="true">
+        <appender-ref ref="FILE-APP" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="FILE-APP"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
+
+        <!--===========================================================-->
+        <!--        Log Levels	TRACE	DEBUG	INFO	WARN	ERROR   -->
+        <!--        TRACE	    ✓	    ✓	    ✓	    ✓	    ✓       -->
+        <!--        DEBUG	    ✗	    ✓	    ✓	    ✓	    ✓       -->
+        <!--        INFO	    ✗	    ✗	    ✓	    ✓	    ✓       -->
+        <!--        WARN	    ✗	    ✗	    ✗	    ✓	    ✓       -->
+        <!--        ERROR	    ✗	    ✗	    ✗	    ✗	    ✓       -->
+        <!--        ALL	        ✓	    ✓	    ✓	    ✓	    ✓       -->
+        <!--        OFF	        ✗	    ✗	    ✗	    ✗	    ✗       -->
+        <!--===========================================================-->
