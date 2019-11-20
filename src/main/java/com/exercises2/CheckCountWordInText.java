@@ -34,9 +34,13 @@ public class CheckCountWordInText {
     }
 
     private LinkedHashMap<String, Long> returnSortedByValueReversedMap(Map<String, Long> resultMap){
-        return resultMap.entrySet().stream()
-                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+        return resultMap.entrySet().stream().sorted(comparator())
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
+    }
+
+    private Comparator<Map.Entry<String, Long>> comparator() {
+        return Comparator.<Map.Entry<String, Long>>comparingLong(Map.Entry::getValue)
+                .reversed().thenComparing(Map.Entry::getKey);
     }
 
     private void textToParagraph(String text, List<String> wordsCheckList){
@@ -54,7 +58,11 @@ public class CheckCountWordInText {
     }
 
     private void sentenceToWordList(String sentence, List<String> wordsCheckList){
-        countWords(Arrays.stream(word_pattern.split(sentence)).collect(Collectors.toList()), wordsCheckList);
+        List<String> wordList = Arrays.stream(word_pattern.split(sentence))
+                .filter(word -> !word.isEmpty())
+                .map(String::toLowerCase)
+                .collect(Collectors.toList());
+        countWords(wordList, wordsCheckList);
     }
 
     private void countWords(List<String> wordList, List<String> wordsCheckList)  {
