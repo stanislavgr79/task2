@@ -1,4 +1,4 @@
-package com.exercises2;
+package com.exercises1;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.exercises2;
+package com.exercises1;
 
 import lombok.Getter;
 
